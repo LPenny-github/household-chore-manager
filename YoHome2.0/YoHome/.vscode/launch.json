@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/YoHome1.0/bin/Debug/net5.0/household-chore-manager.dll",
+            "program": "${workspaceFolder}/bin/Debug/net5.0/YoHome.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/YoHome1.0",
+            "cwd": "${workspaceFolder}",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false
