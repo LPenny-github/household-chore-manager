@@ -14,15 +14,15 @@ namespace YoHome
         Dictionary<int, string> SearchSimilarHouseholdChore(string keyword)
         {
             Dictionary<int, string> similarHouseholdChore = new Dictionary<int, string>();
-
+            // 不精確搜尋
             return similarHouseholdChore;
         }
 
 
         bool HasCandidateExisted(string candidateName, int searchPattern)
         {
-            Dictionary<int, string> SimilarHouseholdChore = new Dictionary<int, string>();
-            SimilarHouseholdChore = SearchSimilarHouseholdChore(candidateName);
+            Dictionary<int, string> SimilarHouseholdChore = SearchSimilarHouseholdChore(candidateName);
+            // 精確搜尋
             return SimilarHouseholdChore.Count == searchPattern;
         }
 
