@@ -26,9 +26,9 @@ namespace YoHome
             return SimilarHouseholdChore.Count == searchPattern;
         }
 
-        void CreateHouseholdChore(string name, int frequency)
+        public void CreateHouseholdChore(string name, int frequency)
         {
-            if (!HasCandidateExisted(name, 0)) { } ;
+            if (!HasCandidateExisted(name, 0)) { };
             HouseholdChoreInformation householdChoreData = new HouseholdChoreInformation
             {
                 HouseholdChoreSerialNumber = householdChoreSerialNumber + 1,
@@ -41,15 +41,15 @@ namespace YoHome
                 WriteIndented = true,
                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
             };
-            string SerializedString = JsonSerializer.Serialize<HouseholdChoreInformation>(householdChoreData,options);
-
+            string SerializedString = JsonSerializer.Serialize<HouseholdChoreInformation>(householdChoreData, options);
+            string filePath = "HouseholdChoreInformation.json";
+            
             try
             {
-            File.AppendAllText("HouseholdChoreInformation.json", SerializedString.ToString());
+                File.AppendAllText(filePath, SerializedString.ToString());
             }
-            catch (System.Exception)
+            catch (IOException)
             {
-                
                 throw;
             }
         }
