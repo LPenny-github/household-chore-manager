@@ -4,8 +4,8 @@ namespace YoHome
 {
     class HouseholdChoreInformation
     {
-        public int SerialNumber;
-        public string HouseholdName;
+        public int HouseholdChoreSerialNumber;
+        public string HouseholdChoreName;
         public int IdealFrequency;
         public DateTime LastImplementedDate;
     }
