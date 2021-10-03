@@ -18,11 +18,11 @@ namespace YoHome
         List<HouseholdChoreInformation> householdChoreInformation = new List<HouseholdChoreInformation>();
 
         List<HouseholdChoreInformation> JsonToList()
-        { 
+        {
             if (File.Exists(fileName))
             {
                 var householdChoreInformationJson = File.ReadAllText(fileName);
-                householdChoreInformation = JsonSerializer.Deserialize<List<HouseholdChoreInformation>>(householdChoreInformationJson);             
+                householdChoreInformation = JsonSerializer.Deserialize<List<HouseholdChoreInformation>>(householdChoreInformationJson);
             }
             return householdChoreInformation;
         }
@@ -41,7 +41,7 @@ namespace YoHome
                                                                 h => h.HouseholdChoreName.Contains(keyword))
                                                                                             .Select(n => n.HouseholdChoreName)
                                                                                             .ToArray();
-          
+
             return similarHouseholdChore;
         }
 
@@ -51,9 +51,12 @@ namespace YoHome
             return similarHouseholdChore.Length == searchPattern;
         }
 
-        public void CreateHouseholdChore(string name, int frequency)
+        public string CreateHouseholdChore(string name, int frequency)
         {
-            if (!AreCandidatesMatchingSearchPattern(0, SearchSimilarHouseholdChore(name))) { /* 無法建立家事 */  };
+            if (!AreCandidatesMatchingSearchPattern(0, SearchSimilarHouseholdChore(name)))
+            { /* 無法建立家事 */
+                return $"{name} 已被建立";
+            };
             HouseholdChoreInformation householdChoreData = new HouseholdChoreInformation
             {
                 HouseholdChoreSerialNumber = householdChoreSerialNumber + 1,
@@ -71,8 +74,9 @@ namespace YoHome
             try
             {
                 File.AppendAllText(fileName, SerializedString.ToString());
+                return $"{name} 建立成功";
             }
-            catch (IOException)
+            catch (IOException) // An I/O error occurred while opening the file.
             {
                 throw;
             }

@@ -16,18 +16,22 @@ namespace YoHome
             }
             string command = GetArgument(0, nameof(command)).ToLowerInvariant();
             HouseholdChoreManager householdChoreManager = new HouseholdChoreManager();
+            string resultString;
             switch (command)
             {
-                case "new":
+                case "new": // user input: "new 洗衣服 14"
                     {
                         int frequency = -1;
                         bool isNumber = Int32.TryParse(arguments[2], out frequency);
                         if (!isNumber || frequency < 0)
                         {
                             Console.WriteLine($"{arguments[1]}'s frequency({frequency}) is unreasonable.");
-                            break;
                         }
-                        householdChoreManager.CreateHouseholdChore(arguments[1], frequency);
+                        else
+                        {
+                            resultString = householdChoreManager.CreateHouseholdChore(arguments[1], frequency);
+                            Console.WriteLine(resultString);
+                        }
                     }
                     break;
                 default:
