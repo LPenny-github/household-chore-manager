@@ -27,28 +27,30 @@ namespace YoHome
             return householdChoreInformation;
         }
 
-        string[] SearchSimilarHouseholdChore(string keyword)
+        List<HouseholdChoreInformation> SearchSimilarHouseholdChore(string keyword)
         {
-            string[] similarHouseholdChore = new string[householdChoreSerialNumber];
+            List<HouseholdChoreInformation> similarHouseholdChore = new List<HouseholdChoreInformation>();
 
             if (householdChoreSerialNumber < 1) // 家事序號 < 1，代表沒有任何家事資料
             {
                 return similarHouseholdChore;
             }
 
+            // 執行搜尋前，先更新 householdChoreInformation 資料
+            JsonToList();
+
             // 不精確搜尋 / fuzzy search 
             similarHouseholdChore = householdChoreInformation.Where(
                                                                 h => h.HouseholdChoreName.Contains(keyword))
-                                                                                            .Select(n => n.HouseholdChoreName)
-                                                                                            .ToArray();
+                                                                                         .ToList();
 
             return similarHouseholdChore;
         }
 
 
-        bool AreCandidatesMatchingSearchPattern(int searchPattern, string[] similarHouseholdChore)
+        bool AreCandidatesMatchingSearchPattern(int searchPattern, List<HouseholdChoreInformation> similarHouseholdChore)
         {
-            return similarHouseholdChore.Length == searchPattern;
+            return similarHouseholdChore.Count() == searchPattern;
         }
 
         public string CreateHouseholdChore(string name, int frequency)
