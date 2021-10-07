@@ -15,7 +15,7 @@ namespace YoHome
                 return arguments[index];
             }
             string command = GetArgument(0, nameof(command)).ToLowerInvariant();
-            HouseholdChoreManager householdChoreManager = new HouseholdChoreManager();
+            HouseholdChoreManager householdChoreManager = new();
             string resultString;
             switch (command)
             {

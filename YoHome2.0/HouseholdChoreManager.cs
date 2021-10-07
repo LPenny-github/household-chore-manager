@@ -15,7 +15,7 @@ namespace YoHome
         int recordSerialNumber = 0;
         const string fileName = "HouseholdChoreInformation.json";
 
-        List<HouseholdChoreInformation> householdChoreInformation = new List<HouseholdChoreInformation>();
+        List<HouseholdChoreInformation> householdChoreInformation = new();
 
         List<HouseholdChoreInformation> JsonToList()
         {
@@ -29,7 +29,7 @@ namespace YoHome
 
         List<HouseholdChoreInformation> SearchSimilarHouseholdChore(string keyword)
         {
-            List<HouseholdChoreInformation> similarHouseholdChore = new List<HouseholdChoreInformation>();
+            List<HouseholdChoreInformation> similarHouseholdChore = new();
 
             if (householdChoreSerialNumber < 1) // 家事序號 < 1，代表沒有任何家事資料
             {
