@@ -2,7 +2,7 @@ using System;
 
 namespace YoHome
 {
-    class HouseholdChoreInformation
+    public class HouseholdChoreInformation
     {
         public int HouseholdChoreSerialNumber;
         public string HouseholdChoreName;

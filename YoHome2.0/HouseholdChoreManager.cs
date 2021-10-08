@@ -27,7 +27,7 @@ namespace YoHome
             return householdChoreInformation;
         }
 
-        List<HouseholdChoreInformation> SearchSimilarHouseholdChore(string keyword)
+        public List<HouseholdChoreInformation> SearchSimilarHouseholdChore(string keyword)
         {
             List<HouseholdChoreInformation> similarHouseholdChore = new();
 
