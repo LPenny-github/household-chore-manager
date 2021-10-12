@@ -6,17 +6,18 @@ namespace YoHome
     {
         static void Main(string[] arguments)
         {
+
+            OperationResultStringMaker operationResultStringMaker = new();
             string GetArgument(int index, string name)
             {
                 if (arguments.Length < 1)
                 {
-                    throw new ArgumentNullException(nameof(name), $"Argument `{name}` is empty.");
+                    operationResultStringMaker.StringMaker("執行指令", false, "未輸入任何指令");
                 }
                 return arguments[index];
             }
             string command = GetArgument(0, nameof(command)).ToLowerInvariant();
             HouseholdChoreManager householdChoreManager = new();
-            string resultString;
             switch (command)
             {
                 case "new": // user input: "new 洗衣服 14"
@@ -25,17 +26,16 @@ namespace YoHome
                         bool isNumber = Int32.TryParse(arguments[2], out frequency);
                         if (!isNumber || frequency < 0)
                         {
-                            Console.WriteLine($"{arguments[1]}'s frequency({frequency}) is unreasonable.");
+                            operationResultStringMaker.StringMaker("建立新家事", false, $"家事頻率({frequency})不合理");
                         }
                         else
                         {
-                            resultString = householdChoreManager.CreateHouseholdChore(arguments[1], frequency);
-                            Console.WriteLine(resultString);
+                            householdChoreManager.CreateHouseholdChore(arguments[1], frequency);
                         }
                     }
                     break;
                 default:
-                    Console.WriteLine($"System don't recognize this command: {command}");
+                    operationResultStringMaker.StringMaker("執行指令", false, $"找不到該指令({command})相應的動作");
                     break;
             }
         }

@@ -16,6 +16,7 @@ namespace YoHome
         const string fileName = "HouseholdChoreInformation.json";
 
         List<HouseholdChoreInformation> householdChoreInformation = new();
+        OperationResultStringMaker operationResultStringMaker = new();
 
         List<HouseholdChoreInformation> JsonToList()
         {
@@ -53,11 +54,12 @@ namespace YoHome
             return similarHouseholdChore.Count() == searchPattern;
         }
 
-        public string CreateHouseholdChore(string name, int frequency)
+        public void CreateHouseholdChore(string name, int frequency)
         {
+            string purpose = $"建立新家事({name})";
             if (!AreCandidatesMatchingSearchPattern(0, SearchSimilarHouseholdChore(name)))
-            { /* 無法建立家事 */
-                return $"{name} 已被建立";
+            {   
+                operationResultStringMaker.StringMaker(purpose, false, "此家事已被建立");
             };
             HouseholdChoreInformation householdChoreData = new HouseholdChoreInformation
             {
@@ -76,11 +78,11 @@ namespace YoHome
             try
             {
                 File.AppendAllText(fileName, SerializedString.ToString());
-                return $"{name} 建立成功";
+                operationResultStringMaker.StringMaker(purpose, true);
             }
             catch (IOException) // An I/O error occurred while opening the file.
             {
-                throw;
+                operationResultStringMaker.StringMaker(purpose, false, $"檔案({fileName})使用中");
             }
         }
     }
