@@ -13,7 +13,7 @@ namespace ConsoleApp
     {
         int householdChoreSerialNumber = 0;
         int recordSerialNumber = 0;
-        const string fileName = "HouseholdChoreInformation.json";
+        const string fileName = "../Data/HouseholdChoreInformation.json";
 
         List<HouseholdChoreInformation> householdChoreInformation = new();
         OperationResultStringMaker operationResultStringMaker = new();
