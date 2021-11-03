@@ -11,8 +11,8 @@ namespace ConsoleApp
 
     public class HouseholdChoreManager
     {
-        int householdChoreSerialNumber = 0;
-        int recordSerialNumber = 0;
+        int householdChoreSerialNumber;
+        // int recordSerialNumber = 0;
         const string fileName = "../Data/HouseholdChoreInformation.json";
 
         List<HouseholdChoreInformation> householdChoreInformation = new();
@@ -23,13 +23,20 @@ namespace ConsoleApp
             if (File.Exists(fileName))
             {
                 var householdChoreInformationJson = File.ReadAllText(fileName);
-                householdChoreInformation = JsonSerializer.Deserialize<List<HouseholdChoreInformation>>(householdChoreInformationJson);
+                if (!string.IsNullOrEmpty(householdChoreInformationJson))
+                {
+                    householdChoreInformation = JsonSerializer.Deserialize<List<HouseholdChoreInformation>>(householdChoreInformationJson);
+                    householdChoreSerialNumber = householdChoreInformation.Last().HouseholdChoreSerialNumber;
+                }
             }
             return householdChoreInformation;
         }
 
         public List<HouseholdChoreInformation> SearchSimilarHouseholdChore(string keyword)
         {
+            // 執行搜尋前，先更新 householdChoreInformation 資料
+            JsonToList();
+
             List<HouseholdChoreInformation> similarHouseholdChore = new();
 
             if (householdChoreSerialNumber < 1) // 家事序號 < 1，代表沒有任何家事資料
@@ -37,8 +44,6 @@ namespace ConsoleApp
                 return similarHouseholdChore;
             }
 
-            // 執行搜尋前，先更新 householdChoreInformation 資料
-            JsonToList();
 
             // 不精確搜尋 / fuzzy search 
             similarHouseholdChore = householdChoreInformation.Where(
@@ -58,32 +63,38 @@ namespace ConsoleApp
         {
             string purpose = $"建立新家事({name})";
             if (!AreCandidatesMatchingSearchPattern(0, SearchSimilarHouseholdChore(name)))
-            {   
+            {
                 operationResultStringMaker.StringMaker(purpose, false, "此家事已被建立");
-            };
-            HouseholdChoreInformation householdChoreData = new HouseholdChoreInformation
+            }
+            else
             {
-                HouseholdChoreSerialNumber = householdChoreSerialNumber + 1,
-                HouseholdChoreName = name,
-                IdealFrequency = frequency,
-                LastImplementedDate = new DateTime()
-            };
-            var options = new JsonSerializerOptions
-            {
-                WriteIndented = true,
-                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
-            };
-            string SerializedString = JsonSerializer.Serialize<HouseholdChoreInformation>(householdChoreData, options);
+                HouseholdChoreInformation householdChoreData = new HouseholdChoreInformation
+                {
+                    HouseholdChoreSerialNumber = householdChoreSerialNumber + 1,
+                    HouseholdChoreName = name,
+                    IdealFrequency = frequency,
+                    LastImplementedDate = new DateTime()
+                };
+                householdChoreInformation.Add(householdChoreData);
 
-            try
-            {
-                File.AppendAllText(fileName, SerializedString.ToString());
-                operationResultStringMaker.StringMaker(purpose, true);
+                var options = new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                    Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
+                };
+                string SerializedString = JsonSerializer.Serialize<List<HouseholdChoreInformation>>(householdChoreInformation, options);
+
+                try
+                {
+                    File.WriteAllText(fileName, SerializedString);
+                    operationResultStringMaker.StringMaker(purpose, true);
+                }
+                catch (IOException) // An I/O error occurred while opening the file.
+                {
+                    operationResultStringMaker.StringMaker(purpose, false, $"檔案({fileName})使用中");
+                }
             }
-            catch (IOException) // An I/O error occurred while opening the file.
-            {
-                operationResultStringMaker.StringMaker(purpose, false, $"檔案({fileName})使用中");
-            }
+
         }
     }
 }
