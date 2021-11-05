@@ -2,21 +2,21 @@ using System;
 
 namespace ConsoleApp
 {
-    public class OperationResultStringMaker
+    public class OperationResultStringMaker: IDataWriter
     {
         public void StringMaker(string purpose, bool result, string prompt = null)
         {
             if (result)
             {
-                Print($" {purpose} 執行成功！");
+                WriteData($" {purpose} 執行成功！");
             }
             else
             {
-                Print($" {purpose} 執行失敗，由於 {prompt}");
+                WriteData($" {purpose} 執行失敗，由於 {prompt}");
             }
         }
 
-        public void Print(string result)
+        public void WriteData(string result)
         {
             Console.WriteLine(result);
         }

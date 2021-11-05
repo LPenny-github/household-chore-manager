@@ -83,16 +83,8 @@ namespace ConsoleApp
                     Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
                 };
                 string SerializedString = JsonSerializer.Serialize<List<HouseholdChoreInformation>>(householdChoreInformation, options);
-
-                try
-                {
-                    File.WriteAllText(fileName, SerializedString);
-                    operationResultStringMaker.StringMaker(purpose, true);
-                }
-                catch (IOException) // An I/O error occurred while opening the file.
-                {
-                    operationResultStringMaker.StringMaker(purpose, false, $"檔案({fileName})使用中");
-                }
+                
+                new DataWriter().BuildNewChoreItem(purpose, SerializedString);
             }
 
         }
