@@ -1,23 +1,22 @@
 using System.IO;
-using System;
 
 namespace ClassLab
 {
-    public class DataWriter : IDataWriter
+    public class DataWriter 
     {
         const string fileName = "../Data/HouseholdChoreInformation.json";
         OperationResultStringMaker operationResultStringMaker = new();
 
-        public void BuildNewChoreItem(string purpose, string jsonString)
+        public string BuildNewChoreItem(string purpose, string jsonString)
         {
             try
             {
                 WriteData(jsonString);
-                operationResultStringMaker.StringMaker(purpose, true);
+                return operationResultStringMaker.StringMaker(purpose, true);
             }
             catch (IOException) // An I/O error occurred while opening the file.
             {
-                operationResultStringMaker.StringMaker(purpose, false, $"檔案({fileName})使用中");
+                return operationResultStringMaker.StringMaker(purpose, false, $"檔案({fileName})使用中");
             }
         }
 

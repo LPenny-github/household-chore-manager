@@ -59,12 +59,12 @@ namespace ClassLab
             return similarHouseholdChore.Count() == searchPattern;
         }
 
-        public void CreateHouseholdChore(string name, int frequency)
+        public string CreateHouseholdChore(string name, int frequency)
         {
             string purpose = $"建立新家事({name})";
             if (!AreCandidatesMatchingSearchPattern(0, SearchSimilarHouseholdChore(name)))
             {
-                operationResultStringMaker.StringMaker(purpose, false, "此家事已被建立");
+                return operationResultStringMaker.StringMaker(purpose, false, "此家事已被建立");
             }
             else
             {
@@ -84,7 +84,7 @@ namespace ClassLab
                 };
                 string SerializedString = JsonSerializer.Serialize<List<HouseholdChoreInformation>>(householdChoreInformation, options);
                 
-                new DataWriter().BuildNewChoreItem(purpose, SerializedString);
+                return new DataWriter().BuildNewChoreItem(purpose, SerializedString);
             }
 
         }
