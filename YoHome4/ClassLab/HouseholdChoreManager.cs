@@ -10,16 +10,26 @@ namespace ClassLab
 
     public class HouseholdChoreManager
     {
+        int householdChoreSerialNumber;
+
         // 優先更新 householdChoreInformation 資料
         List<HouseholdChoreInformation> preData = new DataReader().JsonToList();
 
-        // int recordSerialNumber = 0;    
+        // int recordSerialNumber = 0;
+
+        void GetLastHouseholdChoreSerialNumber()
+        {
+            if (preData.Count() > 0)
+            {
+                householdChoreSerialNumber = preData.Last().HouseholdChoreSerialNumber;
+            }
+        }
 
         public List<HouseholdChoreInformation> SearchSimilarHouseholdChore(string keyword)
         {
             List<HouseholdChoreInformation> similarHouseholdChore = new();
-
-            if (preData.Last().HouseholdChoreSerialNumber < 1) // 家事序號 < 1，代表沒有任何家事資料
+            GetLastHouseholdChoreSerialNumber();
+            if (householdChoreSerialNumber < 1) // 家事序號 < 1，代表沒有任何家事資料
             {
                 return similarHouseholdChore;
             }
@@ -47,7 +57,7 @@ namespace ClassLab
             {
                 HouseholdChoreInformation householdChoreData = new HouseholdChoreInformation
                 {
-                    HouseholdChoreSerialNumber = preData.Last().HouseholdChoreSerialNumber + 1,
+                    HouseholdChoreSerialNumber = householdChoreSerialNumber + 1,
                     HouseholdChoreName = name,
                     IdealFrequency = frequency,
                     LastImplementedDate = new DateTime()
@@ -60,7 +70,7 @@ namespace ClassLab
                     Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
                 };
                 string SerializedString = JsonSerializer.Serialize<List<HouseholdChoreInformation>>(preData, options);
-                
+
                 return (true, null, SerializedString);
             }
 

@@ -63,8 +63,17 @@ namespace ConsoleApp
                             else
                             {
                                 var result = householdChoreManager.CreateHouseholdChore(arguments[1], frequency);
-                                message = new DataWriter().BuildNewChoreItem(commandPurpose, result.jsonString);
-                                Console.WriteLine(message);                            
+                                if (result.valid)
+                                {
+                                    message = new DataWriter().BuildNewChoreItem(commandPurpose, result.jsonString);
+                                    Console.WriteLine(message);
+                                }
+                                else
+                                {
+                                    message = operationResultStringMaker.StringMaker(commandPurpose, result.valid, result.errorMessage);
+                                    Console.WriteLine(message);
+                                }
+
                             }
                         }
 
