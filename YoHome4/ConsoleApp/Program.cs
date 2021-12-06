@@ -62,7 +62,8 @@ namespace ConsoleApp
                             // user input: "new 洗衣服 14"
                             else
                             {
-                                message = householdChoreManager.CreateHouseholdChore(arguments[1], frequency);
+                                var result = householdChoreManager.CreateHouseholdChore(arguments[1], frequency);
+                                message = new DataWriter().BuildNewChoreItem(commandPurpose, result.jsonString);
                                 Console.WriteLine(message);                            
                             }
                         }
