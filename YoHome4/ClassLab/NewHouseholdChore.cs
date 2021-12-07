@@ -8,7 +8,7 @@ using System.Linq;
 namespace ClassLab
 {
 
-    public class HouseholdChoreManager
+    public class NewHouseholdChore
     {
         int householdChoreSerialNumber;
 

@@ -18,7 +18,7 @@ namespace ConsoleApp
             string command = GetArgument(0, nameof(command)).ToLowerInvariant();
             OperationResultStringMaker operationResultStringMaker = new();
             string message;
-            HouseholdChoreManager householdChoreManager = new();
+            NewHouseholdChore newHouseholdChore = new();
             switch (command)
             {
                 case "": // user input: ""
@@ -62,7 +62,7 @@ namespace ConsoleApp
                             // user input: "new 洗衣服 14"
                             else
                             {
-                                var result = householdChoreManager.CreateHouseholdChore(arguments[1], frequency);
+                                var result = newHouseholdChore.CreateHouseholdChore(arguments[1], frequency);
                                 if (result.valid)
                                 {
                                     message = new DataWriter().BuildNewChoreItem(commandPurpose, result.jsonString);
