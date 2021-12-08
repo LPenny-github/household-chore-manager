@@ -20,8 +20,8 @@ namespace ConsoleApp
             string commandPurpose = "執行指令";
             bool IsSuccessful = false;
             string errorMessage = null;
-            string message;
-            
+            string message = null;
+
             NewHouseholdChore newHouseholdChore = new();
             switch (command)
             {
@@ -88,7 +88,10 @@ namespace ConsoleApp
             }
 
             OperationResultStringMaker operationResultStringMaker = new();
-            message = operationResultStringMaker.StringMaker(commandPurpose, IsSuccessful, errorMessage);
+            if (string.IsNullOrEmpty(message))
+            {
+                message = operationResultStringMaker.StringMaker(commandPurpose, IsSuccessful, errorMessage);
+            }
             Console.WriteLine(message);
         }
     }
