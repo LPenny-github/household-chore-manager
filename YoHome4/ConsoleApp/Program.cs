@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ClassLab;
 
 namespace ConsoleApp
@@ -37,7 +38,8 @@ namespace ConsoleApp
                         var checkCommandNewResult = new CheckCommandNew().ReturnCommandNewResult(arguments);
                         if (checkCommandNewResult.IsValid)
                         {
-                            var result = new NewHouseholdChore().CreateHouseholdChore(arguments[1], checkCommandNewResult.frequency);
+                            List<HouseholdChoreInformation> preData = new DataReader().JsonToList();
+                            var result = new NewHouseholdChore().CreateHouseholdChore(arguments[1], checkCommandNewResult.frequency,preData);
                             if (result.valid)
                             {
                                 message = new DataWriter().BuildNewChoreItem(commandPurpose, result.jsonString);

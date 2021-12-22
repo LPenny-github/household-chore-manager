@@ -7,17 +7,13 @@ using System.Linq;
 
 namespace ClassLab
 {
-
     public class NewHouseholdChore
     {
         int householdChoreSerialNumber;
 
-        // 優先更新 householdChoreInformation 資料
-        List<HouseholdChoreInformation> preData = new DataReader().JsonToList();
-
         // int recordSerialNumber = 0;
 
-        void GetLastHouseholdChoreSerialNumber()
+        void GetLastHouseholdChoreSerialNumber(List<HouseholdChoreInformation> preData)
         {
             if (preData.Count() > 0)
             {
@@ -25,10 +21,10 @@ namespace ClassLab
             }
         }
 
-        public List<HouseholdChoreInformation> SearchSimilarHouseholdChore(string keyword)
+        public List<HouseholdChoreInformation> SearchSimilarHouseholdChore(string keyword, List<HouseholdChoreInformation> preData)
         {
             List<HouseholdChoreInformation> similarHouseholdChore = new();
-            GetLastHouseholdChoreSerialNumber();
+            GetLastHouseholdChoreSerialNumber(preData);
             if (householdChoreSerialNumber < 1) // 家事序號 < 1，代表沒有任何家事資料
             {
                 return similarHouseholdChore;
@@ -47,9 +43,9 @@ namespace ClassLab
             return similarHouseholdChore.Count() == searchPattern;
         }
 
-        public (bool valid, string errorMessage, string jsonString) CreateHouseholdChore(string name, int frequency)
+        public (bool valid, string errorMessage, string jsonString) CreateHouseholdChore(string name, int frequency, List<HouseholdChoreInformation> preData)
         {
-            if (!AreCandidatesMatchingSearchPattern(0, SearchSimilarHouseholdChore(name)))
+            if (!AreCandidatesMatchingSearchPattern(0, SearchSimilarHouseholdChore(name, preData)))
             {
                 return (false, "此家事已被建立", null);
             }
