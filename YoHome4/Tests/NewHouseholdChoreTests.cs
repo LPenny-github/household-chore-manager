@@ -56,7 +56,7 @@ namespace Tests
                                                                         (methodResult.jsonString);
             }
 
-            Assert.Equal(1, resultJsonToObject.Count);
+            Assert.Single(resultJsonToObject);
             Assert.Equal(1, resultJsonToObject.First().HouseholdChoreSerialNumber);
             Assert.Equal("洗棉被", resultJsonToObject.First().HouseholdChoreName);
             Assert.Equal(60, resultJsonToObject.First().IdealFrequency);
