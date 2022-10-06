@@ -6,28 +6,34 @@ namespace ConsoleApp.Manager;
 
 public class Read
 {
-    static List<ChoresInfo> ChoreInfoFile()
+    public static List<ChoresInfo> ChoreInfoFile()
     {
-        string fileName = "/Data/ChoreInfos.json";
+        string fileName = "../ConsoleApp/Data/ChoreInfos.json";
         List<ChoresInfo>? choreInfos = new();
 
         if (File.Exists(fileName))
         {
             string? tempText = File.ReadAllText(fileName);
-            choreInfos = JsonSerializer.Deserialize<List<ChoresInfo>>(tempText);
+            if (!string.IsNullOrEmpty(tempText))
+            {
+                choreInfos = JsonSerializer.Deserialize<List<ChoresInfo>>(tempText);
+            }
         }
         return choreInfos;
     }
 
-    static List<ChoresRecord> ChoreRecordFile()
+    public static List<ChoresRecord> ChoreRecordFile()
     {
-        string fileName = "/Data/ChoreRecords.json";
+        string fileName = "../ConsoleApp/Data/ChoreRecords.json";
         List<ChoresRecord>? choreRecords = new();
 
         if (File.Exists(fileName))
         {
             string? tempText = File.ReadAllText(fileName);
-            choreRecords = JsonSerializer.Deserialize<List<ChoresRecord>>(tempText);
+            if (!string.IsNullOrEmpty(tempText))
+            {
+                choreRecords = JsonSerializer.Deserialize<List<ChoresRecord>>(tempText);
+            }
         }
         return choreRecords;
     }
