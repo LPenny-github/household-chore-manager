@@ -1,5 +1,6 @@
 using ConsoleApp.Model;
 using ConsoleApp.Manager;
+using ConsoleApp.View;
 
 namespace ConsoleApp.Controller;
 
@@ -23,6 +24,7 @@ public class Command
                     };
                     choresInfos.Add(data);
                     isSuccessful = write.ChoreInfoFile(choresInfos);
+                    resultString = isSuccessful? "新增家事基本資料成功":"新增家事基本資料失敗";
                 }
                 break;
             default:
@@ -31,6 +33,7 @@ public class Command
                 }
                 break;
         }
-        // call to print the result
+        Print print = new();
+        print.result(isSuccessful, resultString);
     }
 }
