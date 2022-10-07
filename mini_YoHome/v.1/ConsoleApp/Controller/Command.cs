@@ -11,8 +11,11 @@ public class Command
         string userCommand = userInput[0].ToLowerInvariant();
         string resultString = null;
         bool isSuccessful = false;
+
         Write write = new();
         Print print = new();
+        Select select = new();
+
         switch (userCommand)
         {
             case "new":
@@ -30,13 +33,33 @@ public class Command
                 break;
             case "info":
                 {
-                    isSuccessful = print.FormatData(choresInfos);
-                    resultString = isSuccessful? "列印資料成功":"列印資料失敗";
+                    isSuccessful = print.FormatInfo(choresInfos);
+                    resultString = isSuccessful ? "列印資料成功" : "列印資料失敗";
+                }
+                break;
+            case "record":
+                {
+                    isSuccessful = print.FormatRecord(choresInfos, choresRecords);
+                    resultString = isSuccessful ? "列印紀錄成功" : "列印紀錄失敗";
+                }
+                break;
+            case "todo":
+                {
+                    List<ChoresInfo> searchResult = new();
+                    searchResult = select.Todo(choresInfos);
+                    isSuccessful = print.FormatInfo(searchResult);
+                    resultString = isSuccessful ? "輸出資料成功" : "輸出資料失敗";
+                }
+                break;
+            case "add":
+                {
+
+                    resultString = isSuccessful ? "資料儲存成功" : "資料儲存失敗";
                 }
                 break;
             default:
                 {
-
+                    resultString = "查無此指令";
                 }
                 break;
         }
