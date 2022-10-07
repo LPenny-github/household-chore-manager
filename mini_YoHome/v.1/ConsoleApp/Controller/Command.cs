@@ -12,19 +12,26 @@ public class Command
         string resultString = null;
         bool isSuccessful = false;
         Write write = new();
+        Print print = new();
         switch (userCommand)
         {
             case "new":
                 {
                     ChoresInfo data = new()
                     {
-                        SerialNumber = choresInfos.Count() +1, 
+                        SerialNumber = choresInfos.Count() + 1,
                         Name = userInput[1],
-                        IdealFrequency = Convert.ToInt16(userInput[2]) 
+                        IdealFrequency = Convert.ToInt16(userInput[2])
                     };
                     choresInfos.Add(data);
                     isSuccessful = write.ChoreInfoFile(choresInfos);
-                    resultString = isSuccessful? "新增家事基本資料成功":"新增家事基本資料失敗";
+                    resultString = isSuccessful ? "新增家事基本資料成功" : "新增家事基本資料失敗";
+                }
+                break;
+            case "info":
+                {
+                    isSuccessful = print.FormatData(choresInfos);
+                    resultString = isSuccessful? "列印資料成功":"列印資料失敗";
                 }
                 break;
             default:
@@ -33,7 +40,7 @@ public class Command
                 }
                 break;
         }
-        Print print = new();
-        print.result(isSuccessful, resultString);
+
+        print.Result(isSuccessful, resultString);
     }
 }
