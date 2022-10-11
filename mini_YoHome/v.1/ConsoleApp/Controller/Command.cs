@@ -54,9 +54,15 @@ public class Command
             case "add":
                 {   
                     int choresNum = Convert.ToInt32(userInput[1]);
+                    
                     var infoObj = choresInfos.Where(a => a.SerialNumber == choresNum);
                     DateTime lastDate = infoObj.Select(b => b.LastImplementedDate).SingleOrDefault();
-                    DateTime today = DateTime.Today;
+                    
+                    DateTime builtDate = DateTime.Today;
+                    if (userInput.Length == 3)
+                    {
+                        builtDate = Convert.ToDateTime(userInput[2]);
+                    }
                     
                     int newFrequency = 0;
                     int oldFrequency = Convert.ToInt32(infoObj.Select(a => a.IdealFrequency).Single());
@@ -65,8 +71,8 @@ public class Command
                     
                     if (lastDate != default)
                     {
-                        newFrequency = (today - lastDate).Days;
-                        note = $"old frequency is {infoObj.Select(a => a.IdealFrequency)}";
+                        newFrequency = (builtDate - lastDate).Days;
+                        note = $"old frequency is {infoObj.Select(a => a.IdealFrequency).Single()}";
                     }
                     
                     ChoresRecord data = new()
@@ -81,7 +87,7 @@ public class Command
 
                     ChoresInfo info = (from i in choresInfos where i.SerialNumber == choresNum
                                             select i).Single();
-                        info.LastImplementedDate = today;
+                        info.LastImplementedDate = builtDate;
                         info.IdealFrequency = newFrequency == 0? oldFrequency:newFrequency;
                     
                     isSuccessful = write.ChoreInfoFile(choresInfos);
