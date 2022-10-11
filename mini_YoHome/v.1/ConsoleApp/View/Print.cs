@@ -16,7 +16,8 @@ public class Print
         {
             foreach (var item in customData)
             {
-                Console.WriteLine($"編號: {item.SerialNumber},名稱: {item.Name}, 理想頻率: {item.IdealFrequency}, 上次執行日: {item.LastImplementedDate}, 提醒: {item.Alert}");
+                var definedLastDate = item.LastImplementedDate == default? "無": item.LastImplementedDate.ToString("d");
+                Console.WriteLine($"編號: {item.SerialNumber},名稱: {item.Name}, 理想頻率: {item.IdealFrequency}, 上次執行日: {definedLastDate}, 提醒: {item.Alert}");
             }
         }
         catch (System.Exception)
@@ -31,8 +32,8 @@ public class Print
         {
             foreach (var item in customData)
             {
-                string choresName = infos.Where(a => a.SerialNumber == item.SerialNumber).Select(b => b.Name).ToString(); 
-                Console.WriteLine($"編號: {item.ChoreSerialNumber}, 建立日: {item.BuiltDate}, 家事名稱: {choresName}, 真實頻率: {item.RealFrequency}, 備註: {item.Note}");
+                string choresName = infos.Where(a => a.SerialNumber == item.ChoreSerialNumber).Select(b => b.Name).Single(); 
+                Console.WriteLine($"編號: {item.ChoreSerialNumber}, 建立日: {item.BuiltDate.ToString("d")}, 家事名稱: {choresName}, 備註: {item.Note}");
             }
         }
         catch (System.Exception)

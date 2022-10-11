@@ -10,10 +10,20 @@ public class Select
         
         foreach (var data in customData)
         {
-            DateTime executingDay = Convert.ToDateTime(data.LastImplementedDate).AddDays(data.IdealFrequency);
-            if (data.LastImplementedDate == null || executingDay <= DateTime.Today)
+            DateOnly executingDay = default;
+            if (data.LastImplementedDate != default)
+            {
+                executingDay = DateOnly.FromDateTime(data.LastImplementedDate.AddDays(data.IdealFrequency));
+            }
+            DateOnly today = DateOnly.FromDateTime(DateTime.Today);
+            if (data.LastImplementedDate == default || executingDay.CompareTo(today) <= 0)
             {
                 todoList.Add(data);
+            }
+
+            if (!data.Alert)
+            {
+                todoList.Remove(data);
             }
         }
 

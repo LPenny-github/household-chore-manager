@@ -5,7 +5,7 @@ using ConsoleApp.Model;
 namespace ConsoleApp.Manager;
 
 public class Read
-{
+{   
     public static List<ChoresInfo> ChoreInfoFile()
     {
         string fileName = "../ConsoleApp/Data/ChoreInfos.json";

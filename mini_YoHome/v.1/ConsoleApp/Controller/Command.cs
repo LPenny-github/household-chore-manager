@@ -52,8 +52,40 @@ public class Command
                 }
                 break;
             case "add":
-                {
+                {   
+                    int choresNum = Convert.ToInt32(userInput[1]);
+                    var infoObj = choresInfos.Where(a => a.SerialNumber == choresNum);
+                    DateTime lastDate = infoObj.Select(b => b.LastImplementedDate).SingleOrDefault();
+                    DateTime today = DateTime.Today;
+                    
+                    int newFrequency = 0;
+                    int oldFrequency = Convert.ToInt32(infoObj.Select(a => a.IdealFrequency).Single());
+                    string? note = null;
+                    
+                    
+                    if (lastDate != default)
+                    {
+                        newFrequency = (today - lastDate).Days;
+                        note = $"old frequency is {infoObj.Select(a => a.IdealFrequency)}";
+                    }
+                    
+                    ChoresRecord data = new()
+                    {
+                        SerialNumber = choresRecords.Count() + 1,
+                        ChoreSerialNumber = choresNum,
+                        Note = note
+                    };
+                    choresRecords.Add(data);
+                    isSuccessful = write.ChoreDecordFile(choresRecords);
 
+
+                    ChoresInfo info = (from i in choresInfos where i.SerialNumber == choresNum
+                                            select i).Single();
+                        info.LastImplementedDate = today;
+                        info.IdealFrequency = newFrequency == 0? oldFrequency:newFrequency;
+                    
+                    isSuccessful = write.ChoreInfoFile(choresInfos);
+                
                     resultString = isSuccessful ? "資料儲存成功" : "資料儲存失敗";
                 }
                 break;
