@@ -9,7 +9,7 @@ public class Command
     public void Executor(string[] userInput, List<ChoresInfo> choresInfos, List<ChoresRecord> choresRecords)
     {
         string userCommand = userInput[0].ToLowerInvariant();
-        string resultString = null;
+        string resultString = "";
         bool isSuccessful = false;
 
         Write write = new();
