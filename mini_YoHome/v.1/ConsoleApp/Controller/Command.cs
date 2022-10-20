@@ -18,7 +18,7 @@ public class Command
 
         switch (userCommand)
         {
-            case "new":
+            case "new": // 使用者輸入範例: new 整理雜物 100
                 {
                     ChoresInfo data = new()
                     {
@@ -51,7 +51,7 @@ public class Command
                     resultString = isSuccessful ? "輸出資料成功" : "輸出資料失敗";
                 }
                 break;
-            case "add":
+            case "add": // 使用者輸入範例: add 1 2022/7/4
                 {   
                     int choresNum = Convert.ToInt32(userInput[1]);
                     
