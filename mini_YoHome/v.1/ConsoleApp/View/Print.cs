@@ -33,7 +33,7 @@ public class Print
             foreach (var item in customData)
             {
                 string choresName = infos.Where(a => a.SerialNumber == item.ChoreSerialNumber).Select(b => b.Name).Single(); 
-                Console.WriteLine($"編號: {item.ChoreSerialNumber}, 建立日: {item.BuiltDate.ToString("d")}, 家事名稱: {choresName}, 備註: {item.Note}");
+                Console.WriteLine($"編號: {item.SerialNumber}, 建立日: {item.BuiltDate.ToString("d")}, 家事名稱: {choresName}, 備註: {item.Note}");
             }
         }
         catch (System.Exception)
