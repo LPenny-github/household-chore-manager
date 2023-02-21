@@ -10,6 +10,13 @@ public class Print
         Console.WriteLine($"結果為： {resultString}");
     }
 
+    public bool DataInfo(DateTime date)
+    {
+        string formatDate = date.ToString("yyyy/MM/dd");
+        Console.WriteLine(formatDate);
+        return true;
+    }
+
     public bool FormatInfo(List<ChoresInfo> customData)
     {
         try

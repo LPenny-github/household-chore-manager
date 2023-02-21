@@ -29,4 +29,18 @@ public class Select
 
         return todoList;
     }
+
+    public DateTime LastRecordDate(List<ChoresInfo> customData)
+    {
+        DateTime lastRecordDate = customData.First().LastImplementedDate;
+
+        foreach (var data in customData)
+        {
+            if (data.LastImplementedDate > lastRecordDate)
+            {
+                lastRecordDate = data.LastImplementedDate;
+            }
+        }
+        return lastRecordDate;
+    }
 }

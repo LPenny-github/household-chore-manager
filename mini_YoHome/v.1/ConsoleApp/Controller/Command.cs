@@ -95,6 +95,14 @@ public class Command
                     resultString = isSuccessful ? "資料儲存成功" : "資料儲存失敗";
                 }
                 break;
+            case "lastdate":
+                {
+                    DateTime searchResult = new();
+                    searchResult = select.LastRecordDate(choresInfos);
+                    isSuccessful = print.DataInfo(searchResult);
+                    resultString = isSuccessful ? "輸出資料成功" : "輸出資料失敗";
+                }
+                break;
             default:
                 {
                     resultString = "查無此指令";
@@ -102,6 +110,6 @@ public class Command
                 break;
         }
 
-        print.Result(isSuccessful, resultString);
+        // print.Result(isSuccessful, resultString);
     }
 }
