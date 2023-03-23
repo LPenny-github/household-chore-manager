@@ -6,7 +6,10 @@ public class Print
 {
     public void Result(bool isSuccessful, string resultString)
     {
-        Console.WriteLine($"執行是否成功： {isSuccessful}");
+        // 需要知道結果字串，特別當新增完一筆資料時
+        // 但可以忽略成功與否(true/false)，因使用者能從結果字串獲得此資訊
+
+        // Console.WriteLine($"執行是否成功： {isSuccessful}");
         Console.WriteLine($"結果為： {resultString}");
     }
 

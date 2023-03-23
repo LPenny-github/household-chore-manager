@@ -110,6 +110,6 @@ public class Command
                 break;
         }
 
-        // print.Result(isSuccessful, resultString);
+        print.Result(isSuccessful, resultString);
     }
 }
