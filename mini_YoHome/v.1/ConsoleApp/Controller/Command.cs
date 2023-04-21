@@ -31,6 +31,15 @@ public class Command
                     resultString = isSuccessful ? "新增家事基本資料成功" : "新增家事基本資料失敗";
                 }
                 break;
+            case "update": // 使用者輸入範例: update 11 清潔地板
+                {
+                    choresInfos.Where(item => item.SerialNumber == Convert.ToInt16(userInput[1])).ToList()
+                                            .ForEach(i => i.Name = userInput[2]);
+
+                    isSuccessful = write.ChoreInfoFile(choresInfos);
+                    resultString = isSuccessful ? "更改家事基本資料成功" : "更改家事基本資料失敗";
+                }
+                break;
             case "info":
                 {
                     isSuccessful = print.FormatInfo(choresInfos);
