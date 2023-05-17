@@ -106,9 +106,10 @@ public class Command
                 break;
             case "lastdate":
                 {
-                    DateTime searchResult = new();
-                    searchResult = select.LastRecordDate(choresInfos);
-                    isSuccessful = print.DataInfo(searchResult);
+                    DateTime searchResultDate = new();
+                    searchResultDate = select.LastRecordDate(choresInfos);
+                    int searchResulCount = select.NumberOfLastRecordDate(choresInfos, searchResultDate);
+                    isSuccessful = print.DataInfo(searchResultDate, searchResulCount);
                     resultString = isSuccessful ? "輸出資料成功" : "輸出資料失敗";
                 }
                 break;

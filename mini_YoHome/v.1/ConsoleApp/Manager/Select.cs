@@ -43,4 +43,19 @@ public class Select
         }
         return lastRecordDate;
     }
+
+    public int NumberOfLastRecordDate(List<ChoresInfo> customData, DateTime lastRecordDate)
+    {
+        int count = 0;
+
+        foreach (var item in customData)
+        {
+            if(item.LastImplementedDate == lastRecordDate)
+            {
+                count++;
+            }
+        }
+
+        return count;
+    }
 }

@@ -13,10 +13,10 @@ public class Print
         Console.WriteLine($"結果為： {resultString}");
     }
 
-    public bool DataInfo(DateTime date)
+    public bool DataInfo(DateTime date, int count)
     {
         string formatDate = date.ToString("yyyy/MM/dd");
-        Console.WriteLine(formatDate);
+        Console.WriteLine("最後紀錄日: " + formatDate + "\n數量: " + count);
         return true;
     }
 
