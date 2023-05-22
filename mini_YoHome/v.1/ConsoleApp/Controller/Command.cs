@@ -18,20 +18,26 @@ public class Command
 
         switch (userCommand)
         {
-            case "new": // 使用者輸入範例: new 整理雜物 100
+            case "new": // 使用者輸入範例: new 整理雜物 
                 {
-                    ChoresInfo data = new()
+                    if (!String.IsNullOrEmpty(userInput[1]))
                     {
-                        SerialNumber = choresInfos.Count() + 1,
-                        Name = userInput[1],
-                        IdealFrequency = Convert.ToInt16(userInput[2])
-                    };
-                    choresInfos.Add(data);
-                    isSuccessful = write.ChoreInfoFile(choresInfos);
+                        ChoresInfo data = new()
+                        {
+                            SerialNumber = choresInfos.Count() + 1,
+                            Name = userInput[1],
+
+                            // 有時間再增加此功能
+                            // IdealFrequency = Convert.ToInt16(userInput[2])
+                        };
+                        choresInfos.Add(data);
+                        isSuccessful = write.ChoreInfoFile(choresInfos);
+                    }
+
                     resultString = isSuccessful ? "新增家事基本資料成功" : "新增家事基本資料失敗";
                 }
                 break;
-            case "update": // 使用者輸入範例: update 11 清潔地板
+            case "editname": // 使用者輸入範例: editname 11 清潔地板
                 {
                     choresInfos.Where(item => item.SerialNumber == Convert.ToInt16(userInput[1])).ToList()
                                             .ForEach(i => i.Name = userInput[2]);
@@ -61,29 +67,29 @@ public class Command
                 }
                 break;
             case "add": // 使用者輸入範例: add 1 2022/7/4
-                {   
+                {
                     int choresNum = Convert.ToInt32(userInput[1]);
-                    
+
                     var infoObj = choresInfos.Where(a => a.SerialNumber == choresNum);
                     DateTime lastDate = infoObj.Select(b => b.LastImplementedDate).SingleOrDefault();
-                    
+
                     DateTime builtDate = DateTime.Today;
                     if (userInput.Length == 3)
                     {
                         builtDate = Convert.ToDateTime(userInput[2]);
                     }
-                    
+
                     int newFrequency = 0;
                     int oldFrequency = Convert.ToInt32(infoObj.Select(a => a.IdealFrequency).Single());
                     string? note = null;
-                    
-                    
+
+
                     if (lastDate != default)
                     {
                         newFrequency = (builtDate - lastDate).Days;
                         note = $"old frequency is {infoObj.Select(a => a.IdealFrequency).Single()}";
                     }
-                    
+
                     ChoresRecord data = new()
                     {
                         SerialNumber = choresRecords.Count() + 1,
@@ -94,13 +100,14 @@ public class Command
                     isSuccessful = write.ChoreDecordFile(choresRecords);
 
 
-                    ChoresInfo info = (from i in choresInfos where i.SerialNumber == choresNum
-                                            select i).Single();
-                        info.LastImplementedDate = builtDate;
-                        info.IdealFrequency = newFrequency == 0? oldFrequency:newFrequency;
-                    
+                    ChoresInfo info = (from i in choresInfos
+                                       where i.SerialNumber == choresNum
+                                       select i).Single();
+                    info.LastImplementedDate = builtDate;
+                    info.IdealFrequency = newFrequency == 0 ? oldFrequency : newFrequency;
+
                     isSuccessful = write.ChoreInfoFile(choresInfos);
-                
+
                     resultString = isSuccessful ? "資料儲存成功" : "資料儲存失敗";
                 }
                 break;
